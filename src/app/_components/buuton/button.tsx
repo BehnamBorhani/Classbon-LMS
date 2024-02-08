@@ -35,8 +35,8 @@ export const Button: React.FC<ButtonProps> = ({
   const classes = classNames(
     "btn",
     className,
-    { "btn-link": isLink },
     { "btn-outline": isOutline },
+    { "btn-link": isLink },
     { "animated-icon": animatedIcon },
     { "pointer-events-none opacity-80": isLoading },
     { [`btn-${variant}`]: variant },
