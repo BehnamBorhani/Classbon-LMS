@@ -1,3 +1,4 @@
+import { Loading } from "../loading";
 import { Size } from "../types/size.type";
 import { ButtonProps, ButtonShape } from "./button.types";
 import classNames from "classnames";
@@ -46,6 +47,7 @@ export const Button: React.FC<ButtonProps> = ({
 
   return (
     <button type={type} disabled={isDisabled} {...rest} className={classes}>
+      {isLoading && <Loading type={loadingType} />}
       {isLoading ? loadingText : children}
     </button>
   );
