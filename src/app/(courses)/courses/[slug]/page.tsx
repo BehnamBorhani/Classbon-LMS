@@ -1,4 +1,5 @@
-import { Rating } from "@/app/_components/rating/rating";
+import { Progress } from "@/app/_components/progress";
+import { Rating } from "@/app/_components/rating";
 import { API_URL } from "@/configs/global";
 import { CourseDetails } from "@/types/course-details.interface";
 
@@ -37,7 +38,8 @@ export default async function CourseDetails({
         <div className=" mt-5">Video Player Component</div>
       </div>
       <div className="col-span-10 xl:col-span-3">
-        <Rating rate={3}/>
+        <Rating rate={3} />
+        <Progress value={75} variant="warning" size="tiny" />
       </div>
       <div className="col-span-10 xl:col-span-6"></div>
       <div className="col-span-10 xl:col-span-4"></div>

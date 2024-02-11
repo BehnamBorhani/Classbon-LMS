@@ -19,11 +19,6 @@ export default meta;
 
 type Story = StoryObj<typeof Badge>;
 
-export const Tests: Story = {
-  render: (args) => <Badge {...args}>content</Badge>,
-};
-Tests.decorators = [withTests({ results })];
-
 export const BrandColors: Story = {
   render: () => (
     <>
@@ -66,3 +61,8 @@ export const BadgeSizes: Story = {
     </>
   ),
 };
+
+export const Tests: Story = {
+  render: (args) => <Badge {...args}>content</Badge>,
+};
+Tests.decorators = [withTests({ results })];

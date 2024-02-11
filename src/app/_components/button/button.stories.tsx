@@ -19,11 +19,6 @@ export default meta;
 
 type Story = StoryObj<typeof Button>;
 
-export const Tests: Story = {
-  render: (args) => <Button {...args}>Click here</Button>,
-};
-Tests.decorators = [withTests({ results })];
-
 export const BrandColors: Story = {
   render: () => (
     <>
@@ -273,3 +268,8 @@ export const ButtonWithLoading: Story = {
     </>
   ),
 };
+
+export const Tests: Story = {
+  render: (args) => <Button {...args}>Click here</Button>,
+};
+Tests.decorators = [withTests({ results })];
