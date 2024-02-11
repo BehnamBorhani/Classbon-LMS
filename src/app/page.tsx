@@ -8,7 +8,6 @@ import { BlogPostSummary } from "@/types/blog-post-summart.interface";
 import { BlogPostCardList } from "./(blog)/_components/blog-post-list";
 import { API_URL } from "@/configs/global";
 import { Suspense } from "react";
-import Loading from "./loading";
 import { CardPlaceHolder } from "./_components/placeholder";
 import { TestimonialList } from "./_components/testimonial/testimonial-list";
 import { testimonials } from "@/data/testimonial";
