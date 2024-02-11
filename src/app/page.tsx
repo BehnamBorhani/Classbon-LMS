@@ -5,6 +5,8 @@ import { homeFeatures } from "@/data/home-features";
 import Feature from "./_components/feature/feature";
 import { Button } from "./_components/button";
 import { IconArrowLeftFill } from "./_components/icons/icons";
+import { BlogPostSummary } from "@/types/blog-post-summart.interface";
+import { BlogPostCardList } from "./(blog)/_components/blog-post-list";
 
 async function getNewestCourses(count: number): Promise<CourseSummary[]> {
   const res = await fetch(
@@ -14,8 +16,21 @@ async function getNewestCourses(count: number): Promise<CourseSummary[]> {
   return res.json();
 }
 
+async function getNewestBlogPosts(count: number): Promise<BlogPostSummary[]> {
+  const res = await fetch(`https://api.classbon.com/api/blog/newest/${count}`, {
+    next: { revalidate: 60 * 60 * 24 },
+  });
+  return res.json();
+}
+
 export default async function Home() {
-  const newestCourses = await getNewestCourses(4);
+  const newestCoursesData = getNewestCourses(4);
+  const newestBlogPostsData = getNewestBlogPosts(4);
+  const [newestCourses, newestBlogPosts] = await Promise.all([
+    newestCoursesData,
+    newestBlogPostsData,
+  ]);
+
   return (
     <>
       <HomeHeroSection />
@@ -74,6 +89,29 @@ export default async function Home() {
             </Button>
           </div>
         </div>
+      </section>
+      
+      <section className="container py-20">
+        <div className="flex flex-col xl:flex-row gap-4 justify-center xl:justify-between items-center">
+          <div className="text-center xl:text-right">
+            <h2 className="text-2xl font-extrabold">
+              تازه‌ترین مقاله‌های آموزشی
+            </h2>
+            <p className="mt-3 text-lg">
+              به رایگان، به‌روزترین مقاله‌های دنیای تکنولوژی رو در اختیارت
+              می‌ذاریم؛ چون پیشرفتت برامون مهمه!
+            </p>
+          </div>
+          <Button
+            variant="neutral"
+            className="font-semibold"
+            animatedIcon={true}
+          >
+            همه مقاله‌ها
+            <IconArrowLeftFill fill="currentColor" />
+          </Button>
+        </div>
+        <BlogPostCardList posts={newestBlogPosts} />
       </section>
     </>
   );
