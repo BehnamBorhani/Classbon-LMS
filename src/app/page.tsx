@@ -7,17 +7,17 @@ import { Button } from "./_components/button";
 import { IconArrowLeftFill } from "./_components/icons/icons";
 import { BlogPostSummary } from "@/types/blog-post-summart.interface";
 import { BlogPostCardList } from "./(blog)/_components/blog-post-list";
+import { API_URL } from "@/configs/global";
 
 async function getNewestCourses(count: number): Promise<CourseSummary[]> {
-  const res = await fetch(
-    `https://api.classbon.com/api/courses/newest/${count}`,
-    { next: { revalidate: 60 * 60 * 24 } }
-  );
+  const res = await fetch(`${API_URL}/courses/newest/${count}`, {
+    next: { revalidate: 60 * 60 * 24 },
+  });
   return res.json();
 }
 
 async function getNewestBlogPosts(count: number): Promise<BlogPostSummary[]> {
-  const res = await fetch(`https://api.classbon.com/api/blog/newest/${count}`, {
+  const res = await fetch(`${API_URL}/blog/newest/${count}`, {
     next: { revalidate: 60 * 60 * 24 },
   });
   return res.json();
@@ -90,7 +90,7 @@ export default async function Home() {
           </div>
         </div>
       </section>
-      
+
       <section className="container py-20">
         <div className="flex flex-col xl:flex-row gap-4 justify-center xl:justify-between items-center">
           <div className="text-center xl:text-right">
