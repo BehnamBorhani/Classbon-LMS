@@ -45,8 +45,8 @@ async function readData<T>(
   headers?: AxiosRequestHeaders
 ): Promise<T> {
   const options: AxiosRequestConfig = {
-    headers: headers,
     method: "GET",
+    headers: headers,
   };
 
   return await apiBase<T>(url, options);

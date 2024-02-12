@@ -1,8 +1,7 @@
 "use client";
-import { readData } from "@/core/http-service/http-service";
 import { useParams } from "next/navigation";
-import { useEffect } from "react";
 import { useCourseComments } from "../../_api/get-comments";
+import { Comment } from "@/app/_components/comment";
 
 const CourseComments = () => {
   const { slug } = useParams();
@@ -13,7 +12,13 @@ const CourseComments = () => {
     },
   });
 
-  return <></>;
+  return (
+    <>
+      {comments?.data?.map((comment) => (
+        <Comment key={`comment-${comment.id}`} {...comment} variant="info" />
+      ))}
+    </>
+  );
 };
 
 export default CourseComments;
