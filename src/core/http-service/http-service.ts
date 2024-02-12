@@ -1,26 +1,11 @@
 import { API_URL } from "@/configs/global";
-import {
-  BadRequestError,
-  NetworkError,
-  NotFoundError,
-  UnauthorizedError,
-  UnhandledException,
-  ValidationError,
-} from "@/types/http-errors.interface";
+import { ApiError } from "@/types/http-errors.interface";
 import axios, {
-  AxiosHeaders,
   AxiosRequestConfig,
   AxiosRequestHeaders,
   AxiosResponse,
 } from "axios";
-
-type ApiError =
-  | BadRequestError
-  | NetworkError
-  | NotFoundError
-  | UnauthorizedError
-  | UnhandledException
-  | ValidationError;
+import { errorHandler, networkErrorStrategy } from "./http-error-strategies";
 
 const httpService = axios.create({
   baseURL: API_URL,
@@ -39,41 +24,10 @@ httpService.interceptors.response.use(
       if (statusCode >= 400) {
         const errorData: ApiError = error.response?.data;
 
-        if (statusCode === 400 && !errorData.errors) {
-          throw {
-            ...errorData,
-          } as BadRequestError;
-        }
-
-        if (statusCode === 400 && errorData.errors) {
-          throw {
-            ...errorData,
-          } as ValidationError;
-        }
-
-        if (statusCode === 404) {
-          throw {
-            ...errorData,
-            details: "سرویس مورد نظر یافت نشد!",
-          } as NotFoundError;
-        }
-
-        if (statusCode === 403) {
-          throw {
-            ...errorData,
-            details: "دسترسی به سرویس مورد نظر امکان پذیر نمی باشد!",
-          } as UnauthorizedError;
-        }
-
-        if (statusCode >= 500) {
-          throw {
-            ...errorData,
-            details: "خطای سرور",
-          } as UnhandledException;
-        }
-      } else {
-        throw { details: "خطای شبکه" } as NetworkError;
+        errorHandler[statusCode](errorData);
       }
+    } else {
+      networkErrorStrategy();
     }
   }
 );
@@ -86,11 +40,15 @@ async function apiBase<T>(
   return response.data as T;
 }
 
-async function readData<T>(url: string, headers: AxiosHeaders): Promise<T> {
+async function readData<T>(
+  url: string,
+  headers?: AxiosRequestHeaders
+): Promise<T> {
   const options: AxiosRequestConfig = {
     headers: headers,
     method: "GET",
   };
+
   return await apiBase<T>(url, options);
 }
 
@@ -100,8 +58,8 @@ async function createData<TModel, TResult>(
   headers?: AxiosRequestHeaders
 ): Promise<TResult> {
   const options: AxiosRequestConfig = {
-    headers: headers,
     method: "POST",
+    headers: headers,
     data: JSON.stringify(data),
   };
 
@@ -114,8 +72,8 @@ async function updateData<TModel, TResult>(
   headers?: AxiosRequestHeaders
 ): Promise<TResult> {
   const options: AxiosRequestConfig = {
-    headers: headers,
     method: "PUT",
+    headers: headers,
     data: JSON.stringify(data),
   };
 
@@ -127,9 +85,10 @@ async function deleteData(
   headers?: AxiosRequestHeaders
 ): Promise<void> {
   const options: AxiosRequestConfig = {
-    headers: headers,
     method: "DELETE",
+    headers: headers,
   };
+
   return await apiBase(url, options);
 }
 
