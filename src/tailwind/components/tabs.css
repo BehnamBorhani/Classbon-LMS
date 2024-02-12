@@ -10,8 +10,8 @@
       }
     }
   }
-  
+
   .tab-content {
-    @apply leading-10 text-lg min-h-screen;
+    @apply leading-10 text-lg text-justify min-h-screen;
   }
 }
