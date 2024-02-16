@@ -1,4 +1,4 @@
-import { useEffect, useReducer, useRef } from "react";
+import { useEffect, useRef, useReducer } from "react";
 
 interface VideoState {
   isPlaying: boolean;
