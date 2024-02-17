@@ -25,6 +25,7 @@ export const Textbox: React.FC<TextboxProps> = forwardRef<
       { [`textbox-${variant}`]: variant },
       { [`${sizeClasses[size]}`]: size }
     );
+
     return <input ref={ref} type={type} className={classes} {...rest} />;
   }
 );
