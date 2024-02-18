@@ -18,23 +18,23 @@ const SignInForm = () => {
 
   const router = useRouter();
 
+  const showNotification = useNotificationStore(
+    (state) => state.showNotification
+  );
+
   const signIn = useSignIn({
     onSuccess: () => {
       router.push(`/verify?mobile=${getValues("mobile")}`);
+      showNotification({
+        message: "کد تایید به شماره شما ارسال شد",
+        type: "info",
+      });
     },
   });
 
   const onSubmit = (data: any) => {
     signIn.submit(data);
   };
-
-  const showNotifications = useNotificationStore(
-    (state) => state.showNotification
-  );
-
-  useEffect(() => {
-    showNotifications({ type: "error", message: "error", duration: 5000 });
-  }, []);
 
   return (
     <>

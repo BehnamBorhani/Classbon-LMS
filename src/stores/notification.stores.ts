@@ -21,7 +21,7 @@ export const useNotificationStore = create<NotificationState>()(
 
       setTimeout(() => {
         get().dismissNotification(id);
-      }, notification.duration);
+      }, notification.duration || 5000);
     },
 
     dismissNotification: (id) => {
@@ -31,3 +31,9 @@ export const useNotificationStore = create<NotificationState>()(
     },
   }))
 );
+
+export const showNotification = (notifications: Omit<Notification, "id">[]) => {
+  notifications.forEach((notification) =>
+    useNotificationStore.getState().showNotification(notification)
+  );
+};
