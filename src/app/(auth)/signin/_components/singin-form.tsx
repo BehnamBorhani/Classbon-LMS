@@ -5,6 +5,8 @@ import { useForm } from "react-hook-form";
 import { TextInput } from "@/app/_components/formInput";
 import { useSignIn } from "../_api/signin";
 import { useRouter } from "next/navigation";
+import { useNotificationStore } from "@/stores/notification.stores";
+import { useEffect } from "react";
 
 const SignInForm = () => {
   const {
@@ -25,6 +27,14 @@ const SignInForm = () => {
   const onSubmit = (data: any) => {
     signIn.submit(data);
   };
+
+  const showNotifications = useNotificationStore(
+    (state) => state.showNotification
+  );
+
+  useEffect(() => {
+    showNotifications({ type: "error", message: "error", duration: 5000 });
+  }, []);
 
   return (
     <>
