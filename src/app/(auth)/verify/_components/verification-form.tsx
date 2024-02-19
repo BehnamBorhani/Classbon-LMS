@@ -12,7 +12,7 @@ const VerificationForm = () => {
         <AuthCode
           className="mt-10"
           onChange={(value) => {
-            //setValue
+            console.log(value);
           }}
         />
         Timer

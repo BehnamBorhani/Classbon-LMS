@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { AuthCodeProps, AuthInputProps } from "./auth-code.types";
 import classNames from "classnames";
 
@@ -23,10 +23,52 @@ export const AuthCode: React.FC<AuthCodeProps> = ({
     pattern: "[0-9]{1}",
   };
 
-  const sendResult = () => {};
-  const handleOnChange = () => {};
-  const handleOnFocus = () => {};
-  const handleOnKeyDown = () => {};
+  useEffect(() => {
+    if (autoFocus) {
+      inputRef.current[0].focus();
+    }
+  }, [autoFocus]);
+
+  const sendResult = () => {
+    const result = inputRef.current.map((input) => input.value).join("");
+    onChange(result);
+  };
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { value, nextElementSibling },
+    } = e;
+
+    if (value.match(inputProps.pattern)) {
+      if (nextElementSibling !== null) {
+        (nextElementSibling as HTMLInputElement).focus();
+      }
+    } else {
+      e.target.value = "";
+    }
+
+    sendResult();
+  };
+  const handleOnFocus = (e: React.FocusEvent<HTMLInputElement>) => {
+    e.target.select();
+  };
+  const handleOnKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const { key } = e;
+    const target = e.target as HTMLInputElement;
+    if (key === "Backspace") {
+      if (target.value === "") {
+        if (target.previousElementSibling !== null) {
+          const previousElement =
+            target.previousElementSibling as HTMLInputElement;
+          previousElement.value = "";
+          previousElement.focus();
+        }
+      } else {
+        target.value = "";
+      }
+    }
+
+    sendResult();
+  };
 
   const classes = classNames("textbox flex-1 w-1 text-center", {
     [`textbox-${variant}`]: variant,
@@ -46,6 +88,7 @@ export const AuthCode: React.FC<AuthCodeProps> = ({
         ref={(element: HTMLInputElement) => {
           inputRef.current[i] = element;
         }}
+        key={`authInputCode-${i}`}
       />
     );
   }
