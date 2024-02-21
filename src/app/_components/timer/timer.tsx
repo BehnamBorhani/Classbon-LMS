@@ -81,6 +81,7 @@ export const Timer = forwardRef<TimerRef, TimerProps>(
             size={size}
             showTitle={showTitle}
             variant={variant}
+            key={`${datePart}-timer`}
           >
             {unit}
           </TimerProgress>
