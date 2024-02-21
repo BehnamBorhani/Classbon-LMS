@@ -8,7 +8,7 @@ import { useRef } from "react";
 
 const getTwoMinutesFromNow = () => {
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 120000);
+  time.setSeconds(time.getSeconds() + 120);
   return time;
 };
 
@@ -28,8 +28,14 @@ const VerificationForm = () => {
           }}
         />
 
-        <Timer expiryTimestamp={getTwoMinutesFromNow()} />
-        
+        <Timer
+          className="my-8"
+          size="small"
+          expiryTimestamp={getTwoMinutesFromNow()}
+          showDays={false}
+          showHours={false}
+        />
+
         <Button isLink={true} onClick={authCodeRef.current?.clear}>
           ارسال مجدد کد تایید
         </Button>
