@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { TopNavigation } from "./top-navigation";
 import Link from "next/link";
+import { Button } from "../button";
 
 export const Header: React.FC = () => {
   return (
@@ -15,7 +16,11 @@ export const Header: React.FC = () => {
           />
         </Link>
         <TopNavigation />
-        <span className="mr-auto">Auth</span>
+        <Link href="signin">
+          <Button variant="primary" className="mr-auto">
+            ثبت‌نام/ورود
+          </Button>
+        </Link>
       </div>
     </header>
   );
