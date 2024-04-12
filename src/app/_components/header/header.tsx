@@ -16,7 +16,7 @@ export const Header: React.FC = () => {
           />
         </Link>
         <TopNavigation />
-        <Link href="signin">
+        <Link href="/signin">
           <Button variant="primary" className="mr-auto">
             ثبت‌نام/ورود
           </Button>
