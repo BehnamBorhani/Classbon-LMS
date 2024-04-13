@@ -3,11 +3,11 @@ import { Button } from "@/app/_components/button/button";
 import { SignIn } from "../types/sigin.types";
 import { useForm } from "react-hook-form";
 import { TextInput } from "@/app/_components/formInput";
-import { useSignIn } from "../_api/signin";
 import { useRouter } from "next/navigation";
 import { useNotificationStore } from "@/stores/notification.stores";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema } from "../types/signin.schema";
+import { signInAction } from "@/actions/auth";
 
 const SignInForm = () => {
   const {
@@ -25,18 +25,14 @@ const SignInForm = () => {
     (state) => state.showNotification
   );
 
-  const signIn = useSignIn({
-    onSuccess: () => {
-      router.push(`/verify?mobile=${getValues("mobile")}`);
-      showNotification({
-        message: "کد تایید به شماره شما ارسال شد",
-        type: "info",
-      });
-    },
-  });
+  /* router.push(`/verify?mobile=${getValues("mobile")}`);
+  showNotification({
+    message: "کد تایید به شماره شما ارسال شد",
+    type: "info",
+  }); */
 
-  const onSubmit = (data: any) => {
-    signIn.submit(data);
+  const onSubmit = (data: SignIn) => {
+    signInAction(data.mobile);
   };
 
   return (
@@ -52,10 +48,8 @@ const SignInForm = () => {
           name={"mobile"}
           errors={errors}
         />
-
         استفاده از کلاسبن به معنای پذیرش قوانین و مقررات این پلتفرم آموزشی است.
-
-        <Button type="submit" variant="primary" isLoading={signIn.isPending}>
+        <Button type="submit" variant="primary">
           تایید و دریافت کد
         </Button>
       </form>
