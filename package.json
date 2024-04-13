@@ -13,6 +13,7 @@
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@tanstack/react-query": "^5.20.2",
     "@tanstack/react-query-devtools": "^5.20.2",
     "axios": "^1.6.7",
@@ -25,6 +26,7 @@
     "react-hook-form": "^7.50.1",
     "react-intersection-observer": "^9.8.0",
     "react-timer-hook": "^3.0.7",
+    "zod": "^3.22.4",
     "zustand": "^4.5.1"
   },
   "devDependencies": {

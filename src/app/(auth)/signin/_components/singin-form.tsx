@@ -6,7 +6,8 @@ import { TextInput } from "@/app/_components/formInput";
 import { useSignIn } from "../_api/signin";
 import { useRouter } from "next/navigation";
 import { useNotificationStore } from "@/stores/notification.stores";
-import { useEffect } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signInSchema } from "../types/signin.schema";
 
 const SignInForm = () => {
   const {
@@ -14,7 +15,9 @@ const SignInForm = () => {
     handleSubmit,
     formState: { errors },
     getValues,
-  } = useForm<SignIn>();
+  } = useForm<SignIn>({
+    resolver: zodResolver(signInSchema),
+  });
 
   const router = useRouter();
 
@@ -47,19 +50,10 @@ const SignInForm = () => {
         <TextInput<SignIn>
           register={register}
           name={"mobile"}
-          rules={{
-            required: "شماره موبایل الزامی است",
-            maxLength: {
-              value: 11,
-              message: "شماره موبایل باید 11 رقم باشد",
-            },
-            minLength: {
-              value: 11,
-              message: "شماره موبایل باید 11 رقم باشد",
-            },
-          }}
           errors={errors}
         />
+
+        استفاده از کلاسبن به معنای پذیرش قوانین و مقررات این پلتفرم آموزشی است.
 
         <Button type="submit" variant="primary" isLoading={signIn.isPending}>
           تایید و دریافت کد

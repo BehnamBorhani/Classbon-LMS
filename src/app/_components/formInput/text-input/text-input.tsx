@@ -5,7 +5,6 @@ import { Textbox } from "../../textbox";
 const TextInput = <TFormValues extends FieldValues>({
   name,
   register,
-  rules,
   errors,
   variant,
   ...rest
@@ -13,14 +12,14 @@ const TextInput = <TFormValues extends FieldValues>({
   const error = get(errors, name);
   const hasError = !!error;
   return (
-    <>
+    <div>
       <Textbox
-        {...register(name, rules)}
+        {...register(name)}
         {...(hasError ? { variant: "error" } : { variant: variant })}
         {...rest}
       />
-      {hasError && <p className="mt-1 text-sm text-error">{error.message}</p>}
-    </>
+      {hasError && <p className="mt-2 text-sm text-error">{error.message}</p>}
+    </div>
   );
 };
 
