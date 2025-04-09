@@ -9,6 +9,7 @@
     "lint": "next lint",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
+    "svg-to-font": "cd ./icons && gulp",
     "test": "jest",
     "test:generate-output": "jest --json --outputFile=.jest-test-results.json"
   },

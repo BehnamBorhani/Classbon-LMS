@@ -16,6 +16,7 @@ const SignInForm = () => {
     formState: { errors },
     getValues,
   } = useForm<SignIn>({
+    defaultValues: { mobile: "" },
     resolver: zodResolver(signInSchema),
   });
 

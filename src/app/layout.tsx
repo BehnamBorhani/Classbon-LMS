@@ -6,6 +6,7 @@ import { Footer } from "./_components/footer";
 import QueryProvider from "@/providers/react-query-provider";
 import NextTopLoader from "nextjs-toploader";
 import { Notifications } from "./_components/notification/notifications";
+import TawkToScript from "@/lib/tawk-to-script";
 
 const figtree = Figtree({
   display: "swap",
@@ -68,6 +69,8 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
         </QueryProvider>
+
+        <TawkToScript />
       </body>
     </html>
   );
